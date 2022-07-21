@@ -33,8 +33,8 @@ code: |
   sees_nav_bar
   set_progress(5)
   program_instructions
-  whats_next
   accept_terms
+  whats_next
   nav.set_section('review_answers')
   set_progress(10)
   if subject_property.state != "IL":
@@ -139,7 +139,7 @@ subquestion: |
   To use this program you will need: 
 
   * The name, address, and phone of the person who you believe discriminated against you,
-  * Information about the property you were trying to buy or rent, including address and type of property
+  * Information about the property you were trying to buy or rent, including address and type of property,
   * Information about what happened and why you believe it was discrimination, and
   * Additional contacts for IDHR to reach you. (optional)  
 
