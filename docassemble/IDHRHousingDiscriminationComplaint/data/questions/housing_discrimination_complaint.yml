@@ -1,7 +1,9 @@
 metadata:
   title: Housing discrimination complaint
   short title: Housing discrimination complaint
-  comment: This program helps you make a housing discrimination complaint to file with the Illinois Department of Human Rights (IDHR). 
+  comment: This program helps you make a housing discrimination complaint to file with the Illinois Department of Human Rights (IDHR).
+  authors:
+    - Matt Newsted
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
@@ -19,23 +21,30 @@ objects:
 code: |
   al_form_type = 'new_case'
   user_ask_role = 'plaintiff'
+  ilao_easy_form_title = "Housing discrimination complaint"
+  ilao_easy_form_url = "https://www.illinoislegalaid.org/legal-information/housing-discrimination-complaint-idhr"
+  form_name = "Housing discrimination complaint"
+  github_user = 'IllinoisLegalAidOnline'
+  github_repo_name = 'docassemble-IDHRHousingDiscriminationComplaint'
 ---
 # Road map
 sections:
-  - review_answers: Review your answers
+  - section_intro: Start
+  - section_property_details: Property details
+  - section_discrimination_info: Discrimination info
+  - section_about_you: About you and other contacts
+  - section_idhr_form: IDHR form info
+  - section_download: Download  
 ---
 # interview order block
 mandatory: True
 code: |
-  ilao_easy_form_title = "Housing discrimination complaint"
-  ilao_easy_form_url = "https://www.illinoislegalaid.org/legal-information/housing-discrimination-complaint-idhr"
-  form_name = "Housing discrimination complaint"
   sees_nav_bar
   set_progress(5)
   program_instructions
   accept_terms
   whats_next
-  nav.set_section('review_answers')
+  nav.set_section('section_property_details')
   set_progress(10)
   if subject_property.state != "IL":
     not_illinois_property  
@@ -44,13 +53,9 @@ code: |
     number_units
   owner_occupied
   property_still_available
+  nav.set_section('section_discrimination_info')
   set_progress(20)
   basis_list
-  #protected_class_member_identity
-  #protected_class_member_status
-  #protected_class_member_age
-  #if protected_class_member_identity == False and protected_class_member_status == False and protected_class_member_age == False:
-    #not_protected_class
   discrim_housing_opp
   set_progress(35)
   discrim_description
@@ -66,6 +71,7 @@ code: |
   other_party_landlord
   other_parties[0].address.address
   other_parties[0].phone_number
+  nav.set_section('section_about_you')
   set_progress(60)
   users.gather(number=1)
   users[0].address.address
@@ -82,24 +88,23 @@ code: |
       alt_contacts[1].phone_number
       if knows_alt_address[1]:
         alt_contacts[1].address.address
+  nav.set_section('section_idhr_form')
   set_progress(85)
   if filed_other_charges:
     other_charges_text
 
   stats_info
   users[0].birthdate
-  #users[0].gender
   set_progress(95)
   how_learn_about_idhr
   if need_special_assistance:
     language_assistance
-  # e-signature logic not implemented
-  # saw_signature_choice  
   set_progress(100)
+  nav.set_section('section_download')
   get_docs_screen
 ---
 terms: 
-  - "protected class :question-circle:": |
+  - "protected class": |
       The IDHR can investigate discrimination based on the following protected classes:
       
       * Race
@@ -128,7 +133,7 @@ subquestion: |
 
   This program helps you make a Housing/Real Estate Transaction Complainant Information Sheet to file with the Illinois Department of Human Rights (IDHR).
   
-  Learn about [housing discrimination](https://www.illinoislegalaid.org/node/31021).
+  Learn about [**housing discrimination**](https://www.illinoislegalaid.org/node/31021).
 field: sees_nav_bar
 ---
 id: instructions
@@ -143,11 +148,11 @@ subquestion: |
   * Information about what happened and why you believe it was discrimination, and
   * Additional contacts for IDHR to reach you. (optional)  
 
-  Set aside 10 to 15 minutes to finish this program. You can login and save your work to return to later. 
+  Set aside 10 to 15 minutes to finish this program. You can log in and save your work to return to later. 
  
   ${ collapse_template(help_example) }  
 
-  Click on **{green words :question-circle:}** to learn what they mean. Some questions have a ${ fa_icon("question-circle", color_css="#0dcaf0" ) } that also gives help.
+  Click on **{green words}** to learn what they mean. Some questions have a question mark in a circle ${ fa_icon("question-circle", color_css="#0dcaf0" ) } that also gives help.
 ---
 template: help_example
 subject: |
@@ -160,13 +165,13 @@ continue button field: whats_next
 question: |
   Filing a discrimination claim with IDHR
 subquestion: |
-  You cannot be denied housing if you are a member of a **{protected class :question-circle:}**. You have one year after the date of the discrimination to file your claim with IDHR.
+  You cannot be denied housing if you are a member of a **{protected class}**. You have one year after the date of the discrimination to file your claim with IDHR.
   
   This program will help you figure out if IDHR can investigate. At the end of the program, you can download a form to deliver to IDHR. If IDHR accepts your claim, they will send you a charge form.
   
   Note: If your discrimination claim is not eligible for review by IDHR, there may be a city, county, or federal law that applies. Talk with a lawyer to find out.
 
-  If you would like help finding free or low-cost legal services in your area, use [Get Legal Help](https://www.illinoislegalaid.org/get-legal-help).  
+  If you would like help finding free or low-cost legal services in your area, use [**Get Legal Help**](https://www.illinoislegalaid.org/get-legal-help).  
   
 ---
 id: accept terms
@@ -180,7 +185,7 @@ subquestion: |
   ${ collapse_template(get_legal_help) }  
 
 fields:
-  - To continue, you must accept the [terms of use](https://www.illinoislegalaid.org/about/terms-of-use).: accept
+  - To continue, you must accept the [**terms of use**](https://www.illinoislegalaid.org/about/terms-of-use).: accept
     datatype: checkboxes
     none of the above: False
     minlength: 1
@@ -197,7 +202,7 @@ subject: |
 content: |  
   If you have questions or concerns about your legal problem and want legal advice you should talk to a lawyer.
   
-  Use [Get Legal Help](https://www.illinoislegalaid.org/get-legal-help) to find free or low-cost legal services in your area.
+  Use [**Get Legal Help**](https://www.illinoislegalaid.org/get-legal-help) to find free or low-cost legal services in your area.
 ---
 id: discrimination basis check identity
 continue button field: basis_list
@@ -239,74 +244,6 @@ content: |
   * **Order of protection status** means whether a court has issued an order of protection for or against you.
   * **Retaliation** means that someone harmed you or treated you badly because they were upset that you complained about discrimination, filed a discrimination claim, or testified at a discrimination hearing.
 ---
-
-#id: discrimination basis check status
-#question: |
-#  Other reasons for discrimination
-#subquestion: |
-#  The IDHR can also investigate discrimination based on the following:
-#  
-#  * Marital status
-#  * Pregnancy
-#  * Familial status (families with children under 18)
-#  * Arrest record
-#  * Order of protection status
-#  * Military status (including unfavorable discharge)
-#  * Retaliation (for opposing unlawful discrimination)
-#  
-#  ${ collapse_template(protected_class_status_help) }  
-#fields:
-#  - "Were you discriminated against for any of these reasons?": protected_class_member_status
-#    datatype: yesnoradio
-#---
-#template: protected_class_status_help
-#subject: |
-#  **What if I'm not sure?**
-#content: |  
-#  If you don't know whether the discrimination you suffered fits into one of these categories, call IDHR's telephone inquiry line at (312) 814-4320.
-#  
-#  * **Order of protection status** means whether a court has issued an order of protection for or against you.
-#  * **Retaliation** means that someone harmed you or treated you badly because they were upset that you complained about discrimination, filed a discrimination claim, or testified at a discrimination hearing.
-#---
-#id: discrimination basis check age
-#question: |
-#  Were you discriminated against because of your age?
-#fields:
-#  - "Age 40 or older?": protected_class_member_age
-#    datatype: yesnoradio
-#
-#---
-#id: not protected class
-#event: not_protected_class
-#question: |
-#  Sorry
-#subquestion: |
-#  You must have been discriminated against for at least one of the following reasons to use this program.
-#  
-#  * Race
-#  * National origin
-#  * Ancestry
-#  * Skin color
-#  * Religion
-#  * Sex (including gender identiy and sexual harassment)
-#  * Sexual orientation
-#  * Age (40 and over)
-#  * Disability
-#  * Marital status
-#  * Pregnancy
-#  * Familial status (families with children under 18)
-#  * Arrest record
-#  * Order of protection status
-#  * Military status (including unfavorable discharge)
-#  * Retaliation (for opposing unlawful discrimination)
-#  
-#  You can talk with a lawyer to find out what other options you have. If you would like help finding free or low-cost legal services in your area, use [Get Legal Help](https://www.illinoislegalaid.org/get-legal-help).
-#
-#buttons:
-#  - Exit: exit
-#  - Restart: restart
-#
----
 id: property location check
 question: |
   Is the property in Illinois?
@@ -342,7 +279,7 @@ template: county_help
 subject: |
   **How do I look up the county?**
 content: |  
-  We might be able to find the county automatically. Just enter the property address. If it does not appear, you can use this [City-to-County Finder](https://www.statsamerica.org/CityCountyFinder/) to find the county.
+  We might be able to find the county automatically. Just enter the property address. If it does not appear, you can use this [**City-to-County Finder**](https://www.statsamerica.org/CityCountyFinder/) to find the county.
 ---
 id: not illinois property
 event: not_illinois_property
@@ -401,7 +338,7 @@ id: number of units
 question: |
   How many units are on the property?
 subquestion: |
-  If you do not know, leave this blank.
+  If you do not know, you can leave this blank.
 fields:
   - Number of units: number_units
     datatype: integer
@@ -492,7 +429,7 @@ question: |
 subquestion: |
   You must file your complaint with the IDHR within 1 year of when the latest act of discrimination occurred.
   
-  You can talk with a lawyer to find out what other options you have. If you would like help finding free or low-cost legal services in your area, use [Get Legal Help](https://www.illinoislegalaid.org/get-legal-help).
+  You can talk with a lawyer to find out what other options you have. If you would like help finding free or low-cost legal services in your area, use [**Get Legal Help**](https://www.illinoislegalaid.org/get-legal-help).
 
 buttons:
   - Exit: exit
@@ -511,7 +448,7 @@ id: discrimination basis
 question: |
   Why do you believe you were discriminated against?
 subquestion: |
-  Explain the reasons why your housing rights were denied because you are in a **{protected class :question-circle:}**.
+  Explain the reasons why your housing rights were denied because you are in a **{protected class}**.
   
   ${ collapse_template(discrim_basis_example_help) }  
 
@@ -602,21 +539,13 @@ fields:
 id: other party phone number
 question: |
   What is ${ other_parties[0].name.full(middle="full") }'s phone number?
+subquestion: |
+  If you do not know, you can leave this blank.
 fields:
   - Phone: other_parties[0].phone_number
     datatype: al_international_phone
     required: False
 
----
-# let's try to ask this automatically
-#sets:
-#  - users[0].name.first
-#id: other users names
-#question: |
-#  What is your name?
-#fields:
-#  - code: |
-#      users[0].name_fields(person_or_business='unsure')
 ---
 id: user address
 question: |
@@ -669,6 +598,8 @@ question: |
   Do you want to add additional contacts?
 subquestion: |
   IDHR will try to contact up to 2 other people if they can't reach you.
+  
+  You will need to enter their phone number. You can also enter their address if you know it.
 field: has_alt_contact
 choices:
   - Yes: True
@@ -757,16 +688,6 @@ question: |
 subquestion: |
   IDHR asks for additional information for statistical purposes.
 ---
-#id: birthdate
-#question: |
-#  When were you born?
-#subquestion: |
-#  This is optional.
-#fields:
-#  - Date of birth: users[0].birthdate
-#    datatype: BirthDate
-#    required: False
-#---
 id: stats gender and national origin
 question:
   Personal information
@@ -845,53 +766,6 @@ fields:
     maxlength: 90
     show if: assistance_other
 ---
-#id: signature choice
-#decoration: file-signature
-#question: |
-#  How do you want to e-sign your forms?
-#subquestion: |
-#  You need to sign your forms before you deliver them to IDHR. You can:
-#  
-#  * Sign with your finger on a smartphone,
-#  * Sign with the mouse or touchpad on your computer, or
-#  * Add /s/ ${ users[0].name.full(middle="full") } as your signature.
-#field: signature_choice
-#buttons:  
-#  - Sign on my phone: phone
-#    image: mobile-alt
-#  - Sign on this device: this device
-#    image: desktop
-#  - Just add my name: add name
-#    image: keyboard
-#continue button field: saw_signature_choice
-#script: |
-#  <script>
-#    $(".da-field-buttons > div > .btn-da-custom").last().after("<br>")
-#    $(".da-field-buttons > div > .btn-da-custom").first().before("<br>")
-#  </script>
-#---
-#code: |
-#  signature_fields = ['users[0].signature']
-#---
-#depends on:
-#  - signature_choice
-#id: persons signature
-#question: |
-#  ${ users[0].familiar() }, please sign in the box below.
-#signature: users[0].signature
-#under: |
-#  ${ users[0].name.full(middle="full") }
-#---
-#id: e-signature
-#question: |
-#  Do you want to add your e-signature to your ${ form_name }?
-#subquestion: |
-#  If you do not add your e-signature, you can sign your paper form later.
-#fields:
-#  - "Add e-signature?": e_signature
-#    datatype: yesnoradio
-#
----
 id: get docs screen
 event: get_docs_screen
 question: |
@@ -902,7 +776,7 @@ subquestion: |
 
   After you print your Housing discrimination complaint, you will have to sign and date it. Make a copy for your records before you deliver it to IDHR.
   
-  Be sure to read the instructions and important information on page 3 of your form. Find answers to Frequently Asked questions on the [IDHR website](https://www2.illinois.gov/dhr/FilingaCharge/Pages/FAQ_Home.aspx).
+  Be sure to read the instructions and important information on page 3 of your form. Find answers to Frequently Asked questions on the [**IDHR website**](https://www2.illinois.gov/dhr/FilingaCharge/Pages/FAQ_Home.aspx).
 
   This program does not deliver your forms to IDHR.
 
@@ -919,7 +793,7 @@ subquestion: |
   Thank you for using ILAO Easy Forms!
 under: |
   % if not user_logged_in():
-  [${fa_icon("sign-in-alt", color="#0079d0", size="sm")} Sign-in](${url_of('login', next=interview_url())}) or [register](${url_of('register', next=interview_url())}) an ILAO Easy Form account to save your progress (optional).
+  [${fa_icon("sign-in-alt", color="#0079d0", size="sm")} Sign-in](${url_of('login', next=interview_url())}) or [**create**](${url_of('register', next=interview_url())}) an ILAO Easy Form account to save your progress (optional).
   % endif 
 
   &nbsp;
@@ -1048,16 +922,6 @@ attachment:
       - "user_mail_address_line_2": ${ users[0].address.line_two() }
       - "user_phone_number": ${ phone_number_formatted(users[0].phone_number) }
       - "user_unit_short": ${ users[0].address.unit }
-      # e-signature logic not implementd
-      #- "signature_image": |
-      #    % if signature_choice == "phone" or signature_choice == "this device": 
-      #    ${ users[0].signature_if_final(i) }
-      #    % endif
-      #- "signature_slash_s": |
-      #    % if signature_choice == "add name":
-      #    /s/ ${ users[0].name.full(middle="full") }
-      #    % endif
-      #- "signed_date": ${ today() }
 ---
 attachment:
   variable name: housing_cis_addendum[i]
@@ -1137,15 +1001,6 @@ review:
       % else:
       I don't know
       % endif      
-  #- Edit: protected_class_member_age
-    #button: |
-    #  **Were you discriminated against because you are age 40 or older?**
-    #  ${ word(yesno(protected_class_member_age)) }      
-  - Edit: users[0].birthdate
-    button: |
-      **Date of birth:**
-      ${ users[0].birthdate }
-    #show if: protected_class_member_age
   - Edit: discrim_housing_opp
     button: |
       **What happened?** I was...
@@ -1261,6 +1116,18 @@ review:
     button: |
       **Consent to email from IDHR?**
       ${ word(yesno(email_notice_consent)) }
+  - Edit: users[0].birthdate
+    button: |
+      **Your date of birth:**
+      ${ users[0].birthdate }
+  - Edit: users[0].gender
+    button: |
+      **Your gender:**
+      ${ users[0].gender }
+  - Edit: users[0].national_origin
+    button: |
+      **Your national origin:**
+      ${ users[0].national_origin }
   - Edit: has_alt_contact
     button: |
       **Add additional contact?**
@@ -1318,18 +1185,11 @@ review:
       **Description of the other charge:**
       ${ other_charges_text }  
     show if: filed_other_charges
-  - Edit: users[0].gender
-    button: |
-      **Your gender:**
-      ${ users[0].gender }
-  - Edit: users[0].national_origin
-    button: |
-      **Your national origin:**
-      ${ users[0].national_origin }
   - Edit: how_learn_about_idhr
     button: |
       **How did you learn about IDHR?**
       ${ how_learn_about_idhr }
+    show if: how_learn_about_idhr != ""
   - Edit: need_special_assistance
     button: |
       **Do you need communication help from IDHR?**
@@ -1364,17 +1224,320 @@ review:
       **Other communication help requested:**
       ${ assistance_other_description }
     show if: need_special_assistance and assistance_other
-  # e-signature logic not implementd
-  #- Edit: 
-  #  - signature_choice
-  #  - recompute:
-  #        - basic_questions_signature_flow
-  #  button: |
-  #    **Signature choice**:
-  #    % if (signature_choice == "phone") or (signature_choice == "this device"):
-  #    ${ signature_choice.capitalize() }      
-  #    % elif signature_choice == "add name":
-  #    ${ "Add /s/ " + users[0].name.full(middle="full") }
-  #    % elif signature_choice == "no signature":
-  #    ${ "Leave blank and sign later" }
-  #    % endif
+
+---
+id: property details review screen
+event: section_property_details
+question: |
+  Property details
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: subject_property.address
+    button: |
+      **Property address:**
+      ${ subject_property.on_one_line(bare=True) }
+  - Edit: subject_property.address
+    button: |
+      **Property County:**
+      ${ subject_property.county.lower().replace(' county', '').capitalize() }
+  - Edit: kind_apartment
+    button: |
+      **Property type:**
+      
+      % if kind_apartment == True:
+        * Apartment or condominium building
+      % endif
+      % if kind_single_home == True:
+        * Single family home
+      % endif
+      % if kind_public == True:
+        * Public or assisted housing
+      % endif
+      % if kind_mobile == True:
+        * Mobile home park
+      % endif
+      % if kind_vacant == True:
+        * Vacant land
+      % endif
+      % if kind_commercial == True:
+        * Commercial space
+      % endif
+      % if kind_other == True:
+        * Other
+      % endif
+  - Edit: other_property_text
+    button: |
+      **Other property type:**
+      ${ other_property_text }
+    show if: kind_other
+  - Edit: owner_occupied
+    button: |
+      **Owner lives in the property?**
+      ${ word(yesno(owner_occupied)) }      
+  - Edit: number_units
+    button: |
+      **Number of units in the property: **
+      ${ number_units }
+    show if: kind_apartment
+  - Edit: property_still_available
+    button: |
+      **Is the property still available?**
+      % if property_still_available is "yes":
+      Yes
+      % elif property_still_available is "no":
+      No
+      % else:
+      I don't know
+      % endif      
+
+---
+id: discrimination info review screen
+event: section_discrimination_info
+question: |
+  Discrimination info
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: discrim_housing_opp
+    button: |
+      **What happened?** I was...
+      
+      % if discrim_housing_opp == True:
+        * Refused an opportunity to rent or buy housing or told housing was not available when it was.
+      % endif
+      % if discrim_accommodation == True:
+        * Refused a request to accommodate policies or practices or modify housing because of a disability.
+      % endif
+      % if discrim_terms == True:
+        * Discriminated against in the terms or conditions of sale, rental occupancy, or in services or facilities.
+      % endif
+      % if discrim_financing == True:
+        * Discriminated against in financing or denied a mortgage loan.
+      % endif
+      % if discrim_appraisal == True:
+        * Discriminated against in the appraisal process.
+      % endif
+      % if discrim_broker == True:
+        * Discriminated against in broker's services.
+      % endif
+      % if discrim_treated_different == True:
+        * Treated differently than others seeking housing.
+      % endif
+      % if discrim_exercise == True:
+        * Intimidated or interfered or coerced in the exercise of my housing rights.
+      % endif
+      % if discrim_other_way == True:
+        * Discriminated against in another way.
+      % endif
+  - Edit: discrim_other_text
+    button: |
+      **Other discrimination:**
+      ${ discrim_other_text }
+    show if: discrim_other_way
+  - Edit: discrim_description
+    button: |
+      **How were you discriminated against?**
+      ${ discrim_description }
+  - Edit: discrim_date
+    button: |
+      **Last act of discrimination on:**
+      ${ discrim_date }
+  - Edit: discrim_ongoing
+    button: |
+      **Discrimination ongoing?**
+      ${ word(yesno(discrim_ongoing)) }
+  - Edit: discrim_basis
+    button: |
+      **Why were you discriminated against?**
+      ${ discrim_basis }
+  - Edit: other_parties[0].name.first
+    button: |
+      **Who discriminated against you?**
+      ${ other_parties[0].name.full(middle="full") }  
+  - Edit: other_party_landlord
+    button: |
+      **Description of ${ other_parties[0].name.full(middle="full") }:**
+      
+      % if other_party_landlord == True:
+        * Landlord
+      % endif
+      % if other_party_owner == True:
+        * Owner
+      % endif
+      % if other_party_lender == True:
+        * Bank or other lender
+      % endif
+      % if other_party_agent == True:
+        * Real estate agent or broker
+      % endif
+      % if other_party_appraiser == True:
+        * Appraiser
+      % endif
+      % if other_party_other == True:
+        * Other description
+      % endif
+  - Edit: other_party_description
+    button: |
+      **Other description:**
+      ${ other_party_description }
+    show if: other_party_other
+  - Edit: other_parties[0].address
+    button: |
+      **${ other_parties[0].name.full(middle="full") }'s address:**
+      ${ other_parties[0].address.on_one_line(bare=True) }
+  - Edit: other_parties[0].phone_number
+    button: |
+      **${ other_parties[0].name.full(middle="full") }'s phone number:**
+      ${ phone_number_formatted(other_parties[0].phone_number) }
+
+
+---
+id: about you review screen
+event: section_about_you
+question: |
+  About you and other contacts
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: users[0].name.first
+    button: |
+      **Your name:**
+      ${ users[0].name.full(middle="full") }  
+  - Edit: users[0].address.address
+    button: |
+      **Your address:**
+      ${ users[0].address.on_one_line(bare=True) }
+  - Edit: users[0].address
+    button: |
+      **Your County:**
+      ${ users[0].address.county.lower().replace(' county', '').capitalize() }
+  - Edit: users[0].phone_number
+    button: |
+      **Your phone number:**
+      ${ phone_number_formatted(users[0].phone_number) }
+  - Edit: users[0].email
+    button: |
+      **Your email:**
+      ${ users[0].email }
+  - Edit: email_notice_consent
+    button: |
+      **Consent to email from IDHR?**
+      ${ word(yesno(email_notice_consent)) }
+  - Edit: users[0].birthdate
+    button: |
+      **Your date of birth:**
+      ${ users[0].birthdate }
+  - Edit: users[0].gender
+    button: |
+      **Your gender:**
+      ${ users[0].gender }
+  - Edit: users[0].national_origin
+    button: |
+      **Your national origin:**
+      ${ users[0].national_origin }
+  - Edit: has_alt_contact
+    button: |
+      **Add additional contact?**
+      ${ word(yesno(has_alt_contact)) }
+  - Edit: alt_contacts[0].name.first
+    button: |
+      **Contact's name:**
+      ${ alt_contacts[0].name.full(middle="full") }  
+    show if: has_alt_contact
+  - Edit: alt_contacts[0].phone_number
+    button: |
+      **${ alt_contacts[0].name.full(middle="full") }'s phone number:**
+      ${ phone_number_formatted(alt_contacts[0].phone_number) }
+    show if: has_alt_contact
+  - Edit: knows_alt_address[0]
+    button: |
+      **Know ${ alt_contacts[0].name.full(middle="full") }'s address?**
+      ${ word(yesno(knows_alt_address[0])) }
+    show if: has_alt_contact
+  - Edit: alt_contacts[0].address.address
+    button: |
+      **${ alt_contacts[0].name.full(middle="full") }'s address:**
+      ${ alt_contacts[0].address.on_one_line(bare=True) }
+    show if: has_alt_contact and knows_alt_address[0]
+  - Edit: has_second_alt_contact
+    button: |
+      **Add a second contact?**
+      ${ word(yesno(has_second_alt_contact)) }
+  - Edit: alt_contacts[1].name.first
+    button: |
+      **Second contact's name:**
+      ${ alt_contacts[1].name.full(middle="full") }  
+    show if: has_second_alt_contact
+  - Edit: alt_contacts[1].phone_number
+    button: |
+      **${ alt_contacts[1].name.full(middle="full") }'s phone number:**
+      ${ phone_number_formatted(alt_contacts[1].phone_number) }
+    show if: has_second_alt_contact
+  - Edit: knows_alt_address[1]
+    button: |
+      **Know ${ alt_contacts[1].name.full(middle="full") }'s address?**
+      ${ word(yesno(knows_alt_address[1])) }
+    show if: has_second_alt_contact
+  - Edit: alt_contacts[1].address.address
+    button: |
+      **${ alt_contacts[1].name.full(middle="full") }'s address:**
+      ${ alt_contacts[1].address.on_one_line(bare=True) }
+    show if: has_second_alt_contact and knows_alt_address[1]
+
+---
+id: idhr form review screen
+event: section_idhr_form
+question: |
+  IDHR form info
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: filed_other_charges
+    button: |
+      **Have you filed a charge of discrimination with another agency?**
+      ${ word(yesno(filed_other_charges)) }
+  - Edit: other_charges_text
+    button: |
+      **Description of the other charge:**
+      ${ other_charges_text }  
+    show if: filed_other_charges
+  - Edit: how_learn_about_idhr
+    button: |
+      **How did you learn about IDHR?**
+      ${ how_learn_about_idhr }
+    show if: how_learn_about_idhr != ""
+  - Edit: need_special_assistance
+    button: |
+      **Do you need communication help from IDHR?**
+      ${ word(yesno(need_special_assistance)) }
+  - Edit: language_assistance
+    button: |
+      **Do you need language assistance?**
+      ${ word(yesno(language_assistance)) }
+    show if: need_special_assistance
+  - Edit: language_description
+    button: |
+      **Language:**
+      ${ language_description }
+    show if: need_special_assistance and language_assistance
+  - Edit: disability_assistance
+    button: |
+      **Do you need disability assistance?**
+      ${ word(yesno(disability_assistance)) }
+    show if: need_special_assistance
+  - Edit: disability_description
+    button: |
+      **Disability:**
+      ${ disability_description }
+    show if: need_special_assistance and disability_assistance
+  - Edit: assistance_other
+    button: |
+      **Do you need other communication assistance?**
+      ${ word(yesno(assistance_other)) }
+    show if: need_special_assistance
+  - Edit: assistance_other_description
+    button: |
+      **Other communication help requested:**
+      ${ assistance_other_description }
+    show if: need_special_assistance and assistance_other
