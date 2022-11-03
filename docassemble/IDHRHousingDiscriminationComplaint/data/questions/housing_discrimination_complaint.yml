@@ -1118,16 +1118,19 @@ review:
       ${ word(yesno(email_notice_consent)) }
   - Edit: users[0].birthdate
     button: |
-      **Your date of birth:**
+      **Your date of birth (optional):**
       ${ users[0].birthdate }
+    show if: 1==1
   - Edit: users[0].gender
     button: |
-      **Your gender:**
+      **Your gender (optional):**
       ${ users[0].gender }
+    show if: 1==1
   - Edit: users[0].national_origin
     button: |
-      **Your national origin:**
+      **Your national origin (optional):**
       ${ users[0].national_origin }
+    show if: 1==1
   - Edit: has_alt_contact
     button: |
       **Add additional contact?**
@@ -1187,9 +1190,9 @@ review:
     show if: filed_other_charges
   - Edit: how_learn_about_idhr
     button: |
-      **How did you learn about IDHR?**
+      **How did you learn about IDHR (optional)?**
       ${ how_learn_about_idhr }
-    show if: how_learn_about_idhr != ""
+    show if: 1==1
   - Edit: need_special_assistance
     button: |
       **Do you need communication help from IDHR?**
@@ -1426,16 +1429,19 @@ review:
       ${ word(yesno(email_notice_consent)) }
   - Edit: users[0].birthdate
     button: |
-      **Your date of birth:**
+      **Your date of birth (optional):**
       ${ users[0].birthdate }
+    show if: 1==1
   - Edit: users[0].gender
     button: |
-      **Your gender:**
+      **Your gender (optional):**
       ${ users[0].gender }
+    show if: 1==1
   - Edit: users[0].national_origin
     button: |
-      **Your national origin:**
+      **Your national origin (optional):**
       ${ users[0].national_origin }
+    show if: 1==1
   - Edit: has_alt_contact
     button: |
       **Add additional contact?**
@@ -1504,9 +1510,9 @@ review:
     show if: filed_other_charges
   - Edit: how_learn_about_idhr
     button: |
-      **How did you learn about IDHR?**
+      **How did you learn about IDHR (optional)?**
       ${ how_learn_about_idhr }
-    show if: how_learn_about_idhr != ""
+    show if: 1==1
   - Edit: need_special_assistance
     button: |
       **Do you need communication help from IDHR?**
