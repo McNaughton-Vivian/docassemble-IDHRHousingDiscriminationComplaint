@@ -124,6 +124,7 @@ terms:
       * Order of protection status
       * Military status (including unfavorable discharge)
       * Retaliation (for opposing unlawful discrimination)
+      * Source of income
 ---
 id: welcome
 question: |
@@ -133,7 +134,7 @@ subquestion: |
 
   This program helps you make a Housing/Real Estate Transaction Complainant Information Sheet to file with the Illinois Department of Human Rights (IDHR).
   
-  Learn about [**housing discrimination**](https://www.illinoislegalaid.org/node/31021).
+  To learn more, read ILAO's article about [**housing discrimination**](https://www.illinoislegalaid.org/node/31021).
 field: sees_nav_bar
 ---
 id: instructions
@@ -228,7 +229,8 @@ subquestion: |
   * Order of protection status
   * Military status (including unfavorable discharge)
   * Retaliation (for opposing unlawful discrimination)
-  
+  * Source of income
+      
   ${ collapse_template(protected_class_identity_help) }  
 
 ---
