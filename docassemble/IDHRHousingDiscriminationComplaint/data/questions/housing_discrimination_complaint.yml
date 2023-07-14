@@ -175,27 +175,28 @@ subquestion: |
   If you would like help finding free or low-cost legal services in your area, use [**Get Legal Help**](https://www.illinoislegalaid.org/get-legal-help).  
   
 ---
-id: accept terms
-question: |
-  Terms of use
-subquestion: |
-  This program does not provide legal advice. It does not take the place of advice from a lawyer.
-
-  Using this program does not create an attorney-client relationship between you and Illinois Legal Aid Online or its employees.
-
-  ${ collapse_template(get_legal_help) }  
-
-fields:
-  - To continue, you must accept the [**terms of use**](https://www.illinoislegalaid.org/about/terms-of-use).: accept
-    datatype: checkboxes
-    none of the above: False
-    minlength: 1
-    choices:
-      - I accept the terms of use.
-    validation messages:
-      minlength: |
-        You cannot continue unless you agree to the terms of use. 
-continue button field: accept_terms
+# removed question using framework
+#id: accept terms
+#question: |
+#  Terms of use
+#subquestion: |
+#  This program does not provide legal advice. It does not take the place of advice from a lawyer.
+#
+#  Using this program does not create an attorney-client relationship between you and Illinois Legal Aid Online or its employees.
+#
+#  ${ collapse_template(get_legal_help) }  
+#
+#fields:
+#  - To continue, you must accept the [**terms of use**](https://www.illinoislegalaid.org/about/terms-of-use).: accept
+#    datatype: checkboxes
+#    none of the above: False
+#    minlength: 1
+#    choices:
+#      - I accept the terms of use.
+#    validation messages:
+#      minlength: |
+#        You cannot continue unless you agree to the terms of use. 
+#continue button field: accept_terms
 ---
 template: get_legal_help
 subject: |
@@ -832,7 +833,7 @@ code: |
   
 ---
 objects:
-  - al_user_bundle: ALDocumentBundle.using(elements=[instructions, housing_cis_bundle], filename="housing complaint.pdf", title="Download all forms")
+  - al_user_bundle: ALDocumentBundle.using(elements=[instructions, housing_cis_bundle], filename="housing complaint.pdf", title="All forms")
   - al_court_bundle: ALDocumentBundle.using(elements=[housing_cis_bundle], filename="housing complaint.pdf", title="Housing discrimination complaint")
 ---
 objects:
