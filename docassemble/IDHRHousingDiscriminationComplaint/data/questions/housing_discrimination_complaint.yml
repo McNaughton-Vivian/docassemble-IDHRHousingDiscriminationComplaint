@@ -7,7 +7,6 @@ metadata:
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
-  - docassemble.ALToolbox:phone-number-validation.yml  
   - docassemble.ILAO:ilao-interview-framework.yml
   - docassemble.ILAO:shared-basic-questions.yml
 ---
@@ -153,11 +152,11 @@ subquestion: |
  
   ${ collapse_template(help_example) }  
 
-  Click on **{green words}** to learn what they mean. Some questions have a question mark in a circle ${ fa_icon("question-circle", color_css="#0dcaf0" ) } that also gives help.
+  Click on **{green words}** to learn what they mean. Some pages have a question mark in a circle ${ fa_icon("question-circle", color_css="#0dcaf0" ) } that helps explain things.
 ---
 template: help_example
 subject: |
-  **You can expand sections like this to show more information.**
+  **You can click sections like this to show more information.**
 content: |  
   This is an example of help. Click again to hide.
 ---
@@ -779,7 +778,7 @@ subquestion: |
 
   After you print your Housing discrimination complaint, you will have to sign and date it. Make a copy for your records before you deliver it to IDHR.
   
-  Be sure to read the instructions and important information on page 3 of your form. Find answers to Frequently Asked questions on the [**IDHR website**](https://www2.illinois.gov/dhr/FilingaCharge/Pages/FAQ_Home.aspx).
+  Be sure to read the instructions and important information on page 3 of your form. Find answers to Frequently Asked questions on the [**IDHR website**](https://dhr.illinois.gov/filing-a-charge/faq-home.html).
 
   This program does not deliver your forms to IDHR.
 
