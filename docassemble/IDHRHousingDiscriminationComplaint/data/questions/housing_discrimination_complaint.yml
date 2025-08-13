@@ -525,7 +525,7 @@ content: |
 ---
 id: other party description
 question: |
-  How would you describe ${ other_parties[0].name.full(middle="full") }?
+  How would you describe ${ other_parties[0].name_full() }?
 subquestion: |
   Check all that apply.
 fields:
@@ -554,7 +554,7 @@ validation code: |
 ---
 id: other party address
 question: |
-  What is ${ other_parties[0].name.full(middle="full") }'s address?
+  What is ${ other_parties[0].name_full() }'s address?
 subquestion: |
   A business address is preferred, but you can enter whatever address you have.
 fields:
@@ -572,7 +572,7 @@ fields:
 ---
 id: other party phone number
 question: |
-  What is ${ other_parties[0].name.full(middle="full") }'s phone number?
+  What is ${ other_parties[0].name_full() }'s phone number?
 subquestion: |
   If you do not know, you can leave this blank.
 fields:
@@ -652,7 +652,7 @@ id: know alt contact address
 sets:
   - knows_alt_address[i]
 question: |
-  Do you know ${ alt_contacts[i].name.full(middle="full") }'s address?
+  Do you know ${ alt_contacts[i].name_full() }'s address?
 field: knows_alt_address[i]
 choices:
   - Yes: True
@@ -664,7 +664,7 @@ sets:
   - alt_contacts[i].address.city
   - alt_contacts[i].address.zip
 question: |
-  What is ${ alt_contacts[i].name.full(middle="full") }'s address?
+  What is ${ alt_contacts[i].name_full() }'s address?
 fields:
   - Street address: alt_contacts[i].address.address
     address autocomplete: True
@@ -681,7 +681,7 @@ id: alt contacts phone number
 sets:
   - alt_contacts[i].phone_number
 question: |
-  What is ${ alt_contacts[i].name.full(middle="full") }'s phone number?
+  What is ${ alt_contacts[i].name_full() }'s phone number?
 fields:
   - Phone: alt_contacts[i].phone_number
     datatype: al_international_phone
@@ -690,7 +690,7 @@ id: second alt contact
 question: |
   Do you want to add another contact?
 subquestion: |
-  So far, you listed ${ alt_contacts[0].name.full(middle="full") }.
+  So far, you listed ${ alt_contacts[0].name_full() }.
 field: has_second_alt_contact
 choices:
   - Yes: True
@@ -890,10 +890,10 @@ attachment:
   fields:
   
       - "alt_contact_1_full_address": ${ alt_contacts[0].address.on_one_line(bare=True) if (has_alt_contact and knows_alt_address[0]) else '' }
-      - "alt_contact_1_name": ${ alt_contacts[0].name.full(middle="full") if has_alt_contact else '' }
+      - "alt_contact_1_name": ${ alt_contacts[0].name_full() if has_alt_contact else '' }
       - "alt_contact_1_phone": ${ phone_number_formatted(alt_contacts[0].phone_number) if has_alt_contact else '' }
       - "alt_contact_2_full_address": ${ alt_contacts[1].address.on_one_line(bare=True) if (has_second_alt_contact and knows_alt_address[1]) else '' }
-      - "alt_contact_2_name": ${ alt_contacts[1].name.full(middle="full") if has_second_alt_contact else '' }
+      - "alt_contact_2_name": ${ alt_contacts[1].name_full() if has_second_alt_contact else '' }
       - "alt_contact_2_phone": ${ phone_number_formatted(alt_contacts[1].phone_number) if has_second_alt_contact else ''}
       - "discrim_basis": ${ discrim_basis if len(discrim_basis) <= 300 else 'See attached addendum.'}
       - "discrim_broker_services_cb": ${ discrim_broker }
@@ -928,7 +928,7 @@ attachment:
       - "other_party_description": ${ other_party_description }
       - "other_party_landlord_cb": ${ other_party_landlord }
       - "other_party_lender_cb": ${ other_party_lender }
-      - "other_party_name": ${ other_parties[0].name.full(middle="full") }
+      - "other_party_name": ${ other_parties[0].name_full() }
       - "other_party_other_cb": ${ other_party_other }
       - "other_party_owner_cb": ${ other_party_owner }
       - "other_party_phone": ${ phone_number_formatted(other_parties[0].phone_number) }
@@ -948,8 +948,8 @@ attachment:
       - "disability_description": ${ disability_description if need_special_assistance and disability_assistance else "" }
       - "assistance_other_cb": ${ assistance_other if need_special_assistance else "" }
       - "assistance_other_description": ${ assistance_other_description if need_special_assistance and assistance_other else "" }
-      - "user__1": ${ users[0].name.full(middle="full") }
-      - "user__2": ${ users[0].name.full(middle="full") }
+      - "user__1": ${ users[0].name_full() }
+      - "user__2": ${ users[0].name_full() }
       - "user_email": ${ users[0].email }
       - "user_mail_address_county": ${ users[0].address.county.lower().replace(' county', '').capitalize() }
       - "user_mail_address_line_1": ${ users[0].address.address }
@@ -965,7 +965,7 @@ attachment:
   editable: False
   pdf template file: idhr_addendum.pdf
   fields:
-      - "user_name": ${ users[0].name.full(middle="full") }
+      - "user_name": ${ users[0].name_full() }
       - "discrim_basis": ${ discrim_basis if len(discrim_basis) > 300 else '' }
       - "discrim_description": ${ discrim_description if len(discrim_description) > 400 else '' }
 
@@ -1090,10 +1090,10 @@ review:
   - Edit: other_parties[0].name.first
     button: |
       **Who discriminated against you?**
-      ${ other_parties[0].name.full(middle="full") }  
+      ${ other_parties[0].name_full() }  
   - Edit: other_party_landlord
     button: |
-      **Description of ${ other_parties[0].name.full(middle="full") }:**
+      **Description of ${ other_parties[0].name_full() }:**
       
       % if other_party_landlord == True:
         * Landlord
@@ -1120,16 +1120,16 @@ review:
     show if: other_party_other
   - Edit: other_parties[0].address
     button: |
-      **${ other_parties[0].name.full(middle="full") }'s address:**
+      **${ other_parties[0].name_full() }'s address:**
       ${ other_parties[0].address.on_one_line(bare=True) }
   - Edit: other_parties[0].phone_number
     button: |
-      **${ other_parties[0].name.full(middle="full") }'s phone number:**
+      **${ other_parties[0].name_full() }'s phone number:**
       ${ phone_number_formatted(other_parties[0].phone_number) }
   - Edit: users[0].name.first
     button: |
       **Your name:**
-      ${ users[0].name.full(middle="full") }  
+      ${ users[0].name_full() }  
   - Edit: users[0].address.address
     button: |
       **Your address:**
@@ -1172,21 +1172,21 @@ review:
   - Edit: alt_contacts[0].name.first
     button: |
       **Contact's name:**
-      ${ alt_contacts[0].name.full(middle="full") }  
+      ${ alt_contacts[0].name_full() }  
     show if: has_alt_contact
   - Edit: alt_contacts[0].phone_number
     button: |
-      **${ alt_contacts[0].name.full(middle="full") }'s phone number:**
+      **${ alt_contacts[0].name_full() }'s phone number:**
       ${ phone_number_formatted(alt_contacts[0].phone_number) }
     show if: has_alt_contact
   - Edit: knows_alt_address[0]
     button: |
-      **Know ${ alt_contacts[0].name.full(middle="full") }'s address?**
+      **Know ${ alt_contacts[0].name_full() }'s address?**
       ${ word(yesno(knows_alt_address[0])) }
     show if: has_alt_contact
   - Edit: alt_contacts[0].address.address
     button: |
-      **${ alt_contacts[0].name.full(middle="full") }'s address:**
+      **${ alt_contacts[0].name_full() }'s address:**
       ${ alt_contacts[0].address.on_one_line(bare=True) }
     show if: has_alt_contact and knows_alt_address[0]
   - Edit: has_second_alt_contact
@@ -1196,21 +1196,21 @@ review:
   - Edit: alt_contacts[1].name.first
     button: |
       **Second contact's name:**
-      ${ alt_contacts[1].name.full(middle="full") }  
+      ${ alt_contacts[1].name_full() }  
     show if: has_second_alt_contact
   - Edit: alt_contacts[1].phone_number
     button: |
-      **${ alt_contacts[1].name.full(middle="full") }'s phone number:**
+      **${ alt_contacts[1].name_full() }'s phone number:**
       ${ phone_number_formatted(alt_contacts[1].phone_number) }
     show if: has_second_alt_contact
   - Edit: knows_alt_address[1]
     button: |
-      **Know ${ alt_contacts[1].name.full(middle="full") }'s address?**
+      **Know ${ alt_contacts[1].name_full() }'s address?**
       ${ word(yesno(knows_alt_address[1])) }
     show if: has_second_alt_contact
   - Edit: alt_contacts[1].address.address
     button: |
-      **${ alt_contacts[1].name.full(middle="full") }'s address:**
+      **${ alt_contacts[1].name_full() }'s address:**
       ${ alt_contacts[1].address.on_one_line(bare=True) }
     show if: has_second_alt_contact and knows_alt_address[1]
   - Edit: filed_other_charges
@@ -1393,10 +1393,10 @@ review:
   - Edit: other_parties[0].name.first
     button: |
       **Who discriminated against you?**
-      ${ other_parties[0].name.full(middle="full") }  
+      ${ other_parties[0].name_full() }  
   - Edit: other_party_landlord
     button: |
-      **Description of ${ other_parties[0].name.full(middle="full") }:**
+      **Description of ${ other_parties[0].name_full() }:**
       
       % if other_party_landlord == True:
         * Landlord
@@ -1423,11 +1423,11 @@ review:
     show if: other_party_other
   - Edit: other_parties[0].address
     button: |
-      **${ other_parties[0].name.full(middle="full") }'s address:**
+      **${ other_parties[0].name_full() }'s address:**
       ${ other_parties[0].address.on_one_line(bare=True) }
   - Edit: other_parties[0].phone_number
     button: |
-      **${ other_parties[0].name.full(middle="full") }'s phone number:**
+      **${ other_parties[0].name_full() }'s phone number:**
       ${ phone_number_formatted(other_parties[0].phone_number) }
 
 
@@ -1443,7 +1443,7 @@ review:
   - Edit: users[0].name.first
     button: |
       **Your name:**
-      ${ users[0].name.full(middle="full") }  
+      ${ users[0].name_full() }  
   - Edit: users[0].address.address
     button: |
       **Your address:**
@@ -1486,21 +1486,21 @@ review:
   - Edit: alt_contacts[0].name.first
     button: |
       **Contact's name:**
-      ${ alt_contacts[0].name.full(middle="full") }  
+      ${ alt_contacts[0].name_full() }  
     show if: has_alt_contact
   - Edit: alt_contacts[0].phone_number
     button: |
-      **${ alt_contacts[0].name.full(middle="full") }'s phone number:**
+      **${ alt_contacts[0].name_full() }'s phone number:**
       ${ phone_number_formatted(alt_contacts[0].phone_number) }
     show if: has_alt_contact
   - Edit: knows_alt_address[0]
     button: |
-      **Know ${ alt_contacts[0].name.full(middle="full") }'s address?**
+      **Know ${ alt_contacts[0].name_full() }'s address?**
       ${ word(yesno(knows_alt_address[0])) }
     show if: has_alt_contact
   - Edit: alt_contacts[0].address.address
     button: |
-      **${ alt_contacts[0].name.full(middle="full") }'s address:**
+      **${ alt_contacts[0].name_full() }'s address:**
       ${ alt_contacts[0].address.on_one_line(bare=True) }
     show if: has_alt_contact and knows_alt_address[0]
   - Edit: has_second_alt_contact
@@ -1510,21 +1510,21 @@ review:
   - Edit: alt_contacts[1].name.first
     button: |
       **Second contact's name:**
-      ${ alt_contacts[1].name.full(middle="full") }  
+      ${ alt_contacts[1].name_full() }  
     show if: has_second_alt_contact
   - Edit: alt_contacts[1].phone_number
     button: |
-      **${ alt_contacts[1].name.full(middle="full") }'s phone number:**
+      **${ alt_contacts[1].name_full() }'s phone number:**
       ${ phone_number_formatted(alt_contacts[1].phone_number) }
     show if: has_second_alt_contact
   - Edit: knows_alt_address[1]
     button: |
-      **Know ${ alt_contacts[1].name.full(middle="full") }'s address?**
+      **Know ${ alt_contacts[1].name_full() }'s address?**
       ${ word(yesno(knows_alt_address[1])) }
     show if: has_second_alt_contact
   - Edit: alt_contacts[1].address.address
     button: |
-      **${ alt_contacts[1].name.full(middle="full") }'s address:**
+      **${ alt_contacts[1].name_full() }'s address:**
       ${ alt_contacts[1].address.on_one_line(bare=True) }
     show if: has_second_alt_contact and knows_alt_address[1]
 
